@@ -13,6 +13,7 @@ const advertRoute = require("./routes/advert");
 const notificationRoute = require("./routes/notification");
 const streamChatRoute = require("./routes/streamchat");
 const loggerRoute = require("./routes/logger");
+const uploadRoute = require("./routes/uploadimage");
 var cors = require("cors")
 
 dotenv.config();
@@ -37,6 +38,7 @@ mongoose
   app.options('*', cors());
   
   app.use("/api/product", productRoute);
+  app.use("/api/uploadImage", uploadRoute);
  app.use("/api/user", userRoute);
  app.use("/api/auth", authRoute);
  app.use("/api/order", orderRoute);
