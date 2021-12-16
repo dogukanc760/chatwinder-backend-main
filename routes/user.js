@@ -188,7 +188,7 @@ router.get("/getActiveStreamer",  async (req, res) => {
   // const query = req.query.new;
   try {
     const users = await User.find({
-      isStreaming: {$regex:true}
+      isStreaming: {$in:true}
     });
       // ? await User.find().sort({ _id: -1 }).limit(5)
       // : await User.find();
