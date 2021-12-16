@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema(
         country:{type:String, default:null},
         city:{type:String, default:null},
         job:{type:String, default:null},
+        gender:{type:String, default:null},
         age:{type:String, default:null},
         lenght:{type:String, default:null},
         weight:{type:String, default:null},
