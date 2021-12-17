@@ -2,7 +2,7 @@ const router = require("express").Router();
 const multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'images')
+    cb(null, './routes/images')
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
@@ -21,6 +21,20 @@ router.post('/', upload.single('myFile'), (req, res, next) => {
   }
     res.send(file)
   
-})
+});
+
+router.get('/get-image/:name', (req, res, next) => {
+  var filename = req.params.name;
+  console.log(filename)
+  
+  
+    res.set({'Content-Type': 'image/jpg'});
+    res.contentType('image/png');
+    res.contentType('image/jpg');
+    res.sendFile(__dirname+'/images/'+req.params.name);
+  
+  
+
+});
 
 module.exports = router;
