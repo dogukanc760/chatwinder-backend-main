@@ -86,8 +86,8 @@ router.post('/:name', function(reqq, ress) {
       "live_stream": {
         "name": reqq.params.name,
         "broadcast_location":"us_west_oregon",
-        "aspect_ratio_height":1280,
-        "aspect_ratio_width":720,
+        "aspect_ratio_height":720,
+        "aspect_ratio_width":1280,
         "billing_mode":"pay_as_you_go",
         "encoder":"wowza_streaming_engine",
         "transcoder_type":"transcoded"

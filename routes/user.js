@@ -21,6 +21,33 @@ router.post("/create-live", async (req, res)=>{
    }
 });
 
+//get stream by userid 
+router.get("/get-stream-byuser/:id", async (req, res)=>{
+  try {
+    const findLive = await LivedUser.findOne({user_id: req.params.id});
+   
+    res.status(201).json(findLive);
+ } catch (error) {
+   console.log(error);
+   res.status(500).json(error);
+ }
+})
+
+router.put("/update-str/:id", async (req, res)=>{
+  try {
+      const updatedAdvert = await LivedUser.findByIdAndUpdate(
+          req.params.id,
+          {
+              $set:req.body,
+          },
+          {new:true}
+      );
+      res.status(201).json(updatedAdvert);
+  } catch (error) {
+      
+  }
+});
+
 //put connection code and other live-stream by user
 router.put("/update-live/:id/:code", async (req, res)=>{
    try {
