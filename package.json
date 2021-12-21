@@ -14,12 +14,14 @@
     "crypto-js": "^4.1.1",
     "cryptojs": "^2.5.3",
     "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "grunt": "^1.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "multer": "^1.4.4",
     "nodemon": "^2.0.15",
-    "socket.io": "^4.4.0"
+    "socket.io": "^4.4.0",
+    "uuidv4": "^6.2.12"
   }
 }

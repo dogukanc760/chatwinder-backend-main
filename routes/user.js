@@ -7,6 +7,48 @@ const {
 } = require("./verifytoken");
 const User = require("../models/User");
 const Follower = require("../models/Follower");
+const LivedUser = require("../models/LivedUser");
+
+
+//create live-stream by user 
+router.post("/create-live", async (req, res)=>{
+   const newLived = new LivedUser(req.body);
+   try {
+     const liveStream = await newLived.save();
+     res.status(200).json(liveStream);
+   } catch (error) {
+     res.status(500).json(error);
+   }
+});
+
+//put connection code and other live-stream by user
+router.put("/update-live/:id/:code", async (req, res)=>{
+   try {
+      const findLive = await LivedUser.findOne({_id: req.params.id});
+      findLive.connection_code = req.params.code;
+      const update = await LivedUser.findByIdAndUpdate(
+        findLive._id,
+        {
+          $set:findLive
+        },
+        {new:true}
+      )
+      res.status(201).json(update);
+   } catch (error) {
+     console.log(error);
+     res.status(500).json(error);
+   }
+});
+
+//delete live stream 
+router.delete("/delete-live/:id",  async (req, res)=>{
+  try {
+    await LivedUser.findByIdAndUpdate(req.params.id);
+    res.status(200).json("Live has been deleted!");
+} catch (error) {
+    res.status(500).json(error);
+}
+})
 
 //user Follow someone
 router.post("/follow/:followerUserId/:followingUserId", async (req, res) => {

@@ -14,15 +14,40 @@ const notificationRoute = require("./routes/notification");
 const streamChatRoute = require("./routes/streamchat");
 const loggerRoute = require("./routes/logger");
 const uploadRoute = require("./routes/uploadimage");
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const { v4: uuidV4 } = require('uuid')
 var cors = require("cors")
 
 dotenv.config();
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("db connection successfully"))
   .catch((err) => {
     console.log(err);
   });
+ 
+
+app.get('/', (req, res) => {
+  res.redirect(`/${uuidV4()}`)
+})
+
+app.get('/:room', (req, res) => {
+  res.render('room', { roomId: req.params.room })
+})
+
+io.on('connection', socket => {
+  socket.on('join-room', (roomId, userId) => {
+    socket.join(roomId)
+    socket.to(roomId).broadcast.emit('user-connected', userId)
+
+    socket.on('disconnect', () => {
+      socket.to(roomId).broadcast.emit('user-disconnected', userId)
+    })
+  })
+})
 
 //   var whiteList = ['http://localhost:5500', 'http://localhost:5000', 'http://localhost:4200'];
 //   var corsOptions = {
