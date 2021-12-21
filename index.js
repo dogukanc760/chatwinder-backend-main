@@ -31,7 +31,7 @@ mongoose
  
 
 app.get('/', (req, res) => {
-  res.redirect(`/${uuidV4()}`)
+  res.status(200).send("Working!");
 })
 
 app.get('/:room', (req, res) => {
