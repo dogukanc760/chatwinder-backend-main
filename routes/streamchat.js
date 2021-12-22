@@ -134,12 +134,51 @@ https.get(options, function(res) {
 })
 
 
+//start live a stream
+router.put('/start-live-stream/:id', function(reqq, ress){
+  const https = require('https');
+const crypto = require('crypto');
+var hostname = 'api.cloud.wowza.com'
+var path = '/api/v1.7/live_streams/'+reqq.params.id+'/start';
+//For security, never reveal API key in client-side code
+var wscApiKey = 'VBzDvdvO4j0x7GXnXprr3OxHDvE45pNWPLpHKltf5WUDCrBBYbV3rTtjR1oN3405';
+  var wscAccessKey = 'ZV2smAgAf8Bhx5CHhDK5fjRD0xZPOzECQLulQC7l3ENrbOpCo8DsPuLhntQc3332';
+var timestamp = Math.round(new Date().getTime()/1000);
+var hmacData = (timestamp+':'+path+':'+wscApiKey);
+var signature = crypto.createHmac('sha256',wscApiKey).update(hmacData).digest('hex')
+const options = {
+  hostname: hostname,
+  path: path,
+  method: 'PUT',
+  headers: {
+    'wsc-access-key': wscAccessKey,
+    'wsc-timestamp': timestamp,
+    'wsc-signature': signature,
+    'Content-Type': 'application/json'
+  }
+};
+const req = https.request(options, function(res) {
+  var body = '';
+  res.on('data', function(data) {
+    body += data;
+  });
+  res.on('end', function() {
+    console.log(JSON.parse(body));
+    ress.status(200).send(JSON.parse(body));
+  });
+}).on('error', function(e) {
+  console.log(e.message);
+  ress.status(500).send(JSON.parse(e.message));
+});
+req.end();
+});
+
 //stop lvie stream 
 router.post('/stop-live/:id', function(reqq, ress){
   const https = require('https');
   const crypto = require('crypto');
   var hostname = 'api.cloud.wowza.com'
-  var path = '/api/v1.7/live_streams/'+req.params.id+'/stop';
+  var path = '/api/v1.7/live_streams/'+reqq.params.id+'/stop';
   //For security, never reveal API key in client-side code
   var wscApiKey = 'VBzDvdvO4j0x7GXnXprr3OxHDvE45pNWPLpHKltf5WUDCrBBYbV3rTtjR1oN3405';
   var wscAccessKey = 'ZV2smAgAf8Bhx5CHhDK5fjRD0xZPOzECQLulQC7l3ENrbOpCo8DsPuLhntQc3332';
