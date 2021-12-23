@@ -18,6 +18,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const { v4: uuidV4 } = require('uuid')
 var cors = require("cors")
+const path = require("path");
 
 dotenv.config();
 app.set('view engine', 'ejs')
@@ -33,7 +34,7 @@ mongoose
 app.get('/', (req, res) => {
   res.status(200).send("Working!");
 })
-
+app.use("/images", express.static(path.join(__dirname, "routes/images")));
 app.get('/:room', (req, res) => {
   res.render('room', { roomId: req.params.room })
 })

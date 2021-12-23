@@ -23,6 +23,8 @@ router.post('/', upload.single('myFile'), (req, res, next) => {
   
 });
 
+
+
 router.get('/get-image/:name', (req, res, next) => {
   var filename = req.params.name;
   console.log(filename)
