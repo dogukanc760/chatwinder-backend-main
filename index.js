@@ -22,7 +22,7 @@ const path = require("path");
 
 dotenv.config();
 app.set('view engine', 'ejs')
-app.use(express.static('public'))
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("db connection successfully"))
