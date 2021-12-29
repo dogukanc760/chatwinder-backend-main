@@ -80,7 +80,8 @@ router.delete("/delete-live/:id",  async (req, res)=>{
 router.get("/get-following-list/:userId", async (req, res)=>{
 
   try {
-    const findUser = Follower.find({followingId:req.params.userId})
+    console.log(req.params.userId)
+    const findUser = await Follower.find({followingId: req.params.userId})
     res.status(200).json(findUser);
   } catch (error) {
     console.log(error);
@@ -91,7 +92,7 @@ router.get("/get-following-list/:userId", async (req, res)=>{
 router.get("/get-follower-list/:userId", async (req, res)=>{
 
   try {
-    const findUser = Follower.find({
+    const findUser = await Follower.find({
       followerId:{$in:req.params.userId}
     });
     console.log(findUser);
