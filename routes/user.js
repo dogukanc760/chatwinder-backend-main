@@ -77,9 +77,37 @@ router.delete("/delete-live/:id",  async (req, res)=>{
 }
 })
 
+router.get("/get-following-list/:userId", async (req, res)=>{
+
+  try {
+    const findUser = Follower.find({followingId:req.params.userId})
+    res.status(200).json(findUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+router.get("/get-follower-list/:userId", async (req, res)=>{
+
+  try {
+    const findUser = Follower.find({
+      followerId:{$in:req.params.userId}
+    });
+    console.log(findUser);
+    res.status(200).json(findUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
 //user Follow someone
 router.post("/follow/:followerUserId/:followingUserId", async (req, res) => {
-     const newFollower = new Follower(req.body);
+     const newFollower = new Follower({
+       followerId:req.params.followerUserId,
+       followingUserId:req.params.followingUserId
+     });
      try {
        const followedUser = await newFollower.save();
        res.status(201).json(followedUser);
@@ -93,7 +121,7 @@ router.put("/unfollow/:followerUserId/:followingUserId", async (req, res) => {
   
   try {
     const unFollow = await Follower.findByIdAndUpdate(
-      req.params.id,
+      req.params.followingUserId,
       {
         $set : req.body,
       },

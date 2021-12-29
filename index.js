@@ -110,6 +110,8 @@ io.on("connection", (socket) => {
  app.use("/api/notification", notificationRoute);
  app.use("/api/streamchat", streamChatRoute);
  app.use("/api/logger", loggerRoute);
+ app.use("/api/conversation", conversationsRoute);
+ app.use("/api/messages", messagesRoute)
 
 
 app.listen(process.env.PORT || 3000, () => {
