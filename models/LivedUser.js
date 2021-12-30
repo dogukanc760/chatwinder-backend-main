@@ -11,7 +11,8 @@ const LivedUserSchema = new mongoose.Schema(
         stream_name:{type:String, default:null},
         stream_id:{type:String, default:null},
         username:{type:String, default:null},
-        password:{type:String, default:null}
+        password:{type:String, default:null},
+        streamtype:{type:String, default:null}
     },{timestamps:true}
     );
 module.exports = mongoose.model("LivedUser", LivedUserSchema);
