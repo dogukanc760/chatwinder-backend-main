@@ -19,7 +19,7 @@ router.get("/get/:userId", async (req, res) => {
 
 router.get("/get-musical", async (req, res) => {
      try {
-         const getMusical = await GeneralParams.findOne(
+         const getMusical = await GeneralParams.find(
              {streamType: {$in:"musical"} });
              res.status(200).json(getMusical);
      } catch (error) {
@@ -28,7 +28,7 @@ router.get("/get-musical", async (req, res) => {
 }); 
 router.get("/get-talk", async (req, res) => {
     try {
-        const getTalk = await GeneralParams.findOne(
+        const getTalk = await GeneralParams.find(
             {streamType: {$in:"talk"} });
             res.status(200).json(getTalk);
     } catch (error) {
