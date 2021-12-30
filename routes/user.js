@@ -33,6 +33,15 @@ router.get("/get-stream-byuser/:id", async (req, res)=>{
  }
 })
 
+router.get("/:id", async (req, res)=>{
+   try {
+     const user = await User.find({username:{$regex:req.params.id}})
+     res.status(200).json(user);
+   } catch (error) {
+     res.status(500).json(error);
+   }
+})
+
 router.put("/update-str/:id", async (req, res)=>{
   try {
       const updatedAdvert = await LivedUser.findByIdAndUpdate(
