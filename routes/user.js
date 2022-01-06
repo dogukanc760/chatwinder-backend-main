@@ -116,7 +116,7 @@ router.get("/get-follower-list/:userId", async (req, res)=>{
 router.post("/follow/:followerUserId/:followingUserId", async (req, res) => {
      const newFollower = new Follower({
        followerId:req.params.followerUserId,
-       followingUserId:req.params.followingUserId
+       followingId:req.params.followingUserId
      });
      try {
        const followedUser = await newFollower.save();
