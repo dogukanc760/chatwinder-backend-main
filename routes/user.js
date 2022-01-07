@@ -126,7 +126,10 @@ router.post("/follow/:followerUserId/:followingUserId", async (req, res) => {
 //user unFollow someone
 router.put("/unfollow/:followerUserId/:followingUserId", async (req, res) => {
   try {
-    const findFollowing = await Follower.findOne({followingId:{$in:req.params.followingUserId}});
+    const findFollowing = await Follower.findOne({
+      followingId:{$in:req.params.followingUserId},
+      followerId:{$in:req.params.followerUserId}
+    });
     console.log(findFollowing._id)
     findFollowing.followingId="";
     const unFollow = await Follower.findByIdAndUpdate(
