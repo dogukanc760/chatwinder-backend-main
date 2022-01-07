@@ -53,6 +53,7 @@ router.get("/check/:firstId/:secondId", async (req, res) => {
   try {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstId, req.params.secondId] },
+      status:{$in:true}
     });
     res.status(200).json(conversation);
   } catch (err) {
