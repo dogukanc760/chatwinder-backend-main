@@ -16,6 +16,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+//delete conv 
+router.put("/delete-conv/:id", async (req, res) => {
+try {
+   const findConversation = await Conversation.findOne({id: {$in:req.params.id}});
+   findConversation.status = false; 
+   const updateConversation =await Conversation.findByIdAndUpdate(
+     req.params.id,
+     {
+       $set:findConversation
+     },{new:true}
+   );
+   res.status(200).json(updateConversation);
+} catch (error) {
+  res.status(500).json(error);
+}
+});
+
 //get conv of a user
 
 router.get("/:userId", async (req, res) => {
