@@ -67,6 +67,7 @@ router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
   try {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+      status:{$in:true}
     });
     res.status(200).json(conversation)
   } catch (err) {
