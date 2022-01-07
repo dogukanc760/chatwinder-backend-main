@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 //delete conv 
 router.put("/delete-conv/:id", async (req, res) => {
 try {
-   const findConversation = await Conversation.findOne({id: {$in:req.params.id}});
+   const findConversation = await Conversation.findOne({_id: {$in:req.params.id}});
    findConversation.status = false; 
    const updateConversation =await Conversation.findByIdAndUpdate(
      req.params.id,
