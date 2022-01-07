@@ -9,6 +9,71 @@ const User = require("../models/User");
 const Follower = require("../models/Follower");
 const LivedUser = require("../models/LivedUser");
 
+
+
+//block user
+router.post("/block/:userId/:blockUserId", async(req, res)=>{
+  try {
+    const user = await User.findOne({_id: req.params.userId});
+    user.blockList.push(req.params.blockUserId);
+    const update = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set:user
+      },{new:true}
+    );
+    res.status(200).json(update);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+//check block list
+router.get("/check-block/:userId/:blockUserId", async(req, res)=>{
+  try {
+    const user = await User.findOne(
+      {
+        _id: {$in:req.params.userId},
+        blockList:{$all:[req.params.blockUserId]}
+      }
+      );
+    
+    console.log(user)
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+//un block user
+router.post("/unblock/:userId/:blockUserId", async(req, res)=>{
+  try {
+    const user = await User.findOne(
+      {
+        _id: {$in:req.params.userId},
+        blockList:{$all:[req.params.blockUserId]}
+      }
+      );
+    
+    var index = user.blockList.indexOf(req.params.blockUserId);
+    if(index > -1){
+      user.blockList.splice(index, 1);
+    }
+    const updateUser = await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $set:user
+      },{new:true}
+    );
+
+    console.log(user.blockList)
+    
+    res.status(200).json(updateUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 //create live-stream by user
 router.post("/create-live", async (req, res) => {
   const newLived = new LivedUser(req.body);

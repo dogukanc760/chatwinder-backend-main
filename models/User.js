@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema(
         wallet:{type:Number, default:null},
         isAdmin:{type:Boolean, default:false},
         isActive:{type:Boolean, default:true},
+        blockList:{type:Array},
         
     },
     {timestamps:true}
