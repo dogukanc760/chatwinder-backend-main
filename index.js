@@ -17,6 +17,7 @@ const uploadRoute = require("./routes/uploadimage");
 const conversationsRoute = require("./routes/conversations");
 const messagesRoute = require("./routes/messages");
 const giftRoute = require("./routes/gift");
+const settingRoute = require("./routes/setting");
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const { v4: uuidV4 } = require('uuid')
@@ -114,6 +115,7 @@ io.on("connection", (socket) => {
  app.use("/api/conversation", conversationsRoute);
  app.use("/api/messages", messagesRoute);
  app.use("/api/gift", giftRoute);
+ app.use("/api/setting", settingRoute);
 
 
 app.listen(process.env.PORT || 3000, () => {

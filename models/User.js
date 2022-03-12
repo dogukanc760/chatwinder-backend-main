@@ -29,7 +29,9 @@ const UserSchema = new mongoose.Schema(
         isAdmin:{type:Boolean, default:false},
         isActive:{type:Boolean, default:true},
         blockList:{type:Array},
-        
+        isBanned:{type:Boolean, default:false},
+        banStart:{type:String, default:''},
+        banFinish:{type:String, default:''},
     },
     {timestamps:true}
 )
